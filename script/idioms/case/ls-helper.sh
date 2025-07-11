@@ -20,7 +20,7 @@ function Usage_Exit {
     echo "Попробуйте:"
     echo "  $0 color          # цветной вывод"
     echo "  $0 last 3         # 3 последних файла"
-    echo "  $0 len            # список с длинами имен"
+    echo "  $0 len            # список с длиной имени"
     echo "  $0 long           # файл(ы) с самым длинным именем"
     exit
 }
