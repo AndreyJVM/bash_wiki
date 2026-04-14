@@ -1,0 +1,103 @@
+# Host - алиас для подключения (то, что вы пишете после ssh)
+
+# HostName - реальный DNS или IP адрес сервера
+
+# User - имя пользователя для входа
+
+# Port - порт SSH (по умолчанию 22)
+
+# IdentityFile - путь к приватному ключу
+
+# ProxyJump - промежуточный хост (bastion)
+
+# ForwardAgent - проброс SSH агента
+
+# Compression - сжатие данных
+
+# ServerAliveInterval - интервал отправки keepalive пакетов
+
+
+# Базовое подключение к серверу
+Host myserver
+    HostName 192.168.1.100
+    User root
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+
+# Подключение через нестандартный порт
+Host dev-server
+    HostName dev.example.com
+    User developer
+    Port 2222
+    IdentityFile ~/.ssh/dev_key
+
+# Сокращение для GitHub (git clone git@github:username/repo.git)
+Host github
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/github_key
+
+# Проброс портов (локальный)
+Host tunnel
+    HostName remote-server.com
+    User user
+    LocalForward 8080 localhost:80
+    LocalForward 5432 localhost:5432
+
+# Проброс портов (удаленный)
+Host remote-tunnel
+    HostName remote-server.com
+    User user
+    RemoteForward 2222 localhost:22
+
+# Прыжок через bastion-хост (Jump Host)
+Host internal-server
+    HostName 10.0.1.50
+    User admin
+    ProxyJump bastion.example.com
+    IdentityFile ~/.ssh/internal_key
+
+# Альтернативный синтаксис прыжка (для старых версий SSH)
+Host internal-server-old
+    HostName 10.0.1.50
+    User admin
+    ProxyCommand ssh -W %h:%p bastion.example.com
+
+# Сжатие данных для медленных соединений
+Host slow-link
+    HostName slow-server.com
+    User user
+    Compression yes
+    CompressionLevel 9
+
+# Keep-alive для предотвращения разрыва соединения
+Host keepalive-server
+    HostName example.com
+    User user
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+
+# Отключение проверки ключа хоста (не рекомендуется для продакшн)
+Host insecure-server
+    HostName 10.0.0.5
+    User user
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+
+# Мультиплексирование соединений (ускорение повторных подключений)
+Host *
+    ControlMaster auto
+    ControlPath ~/.ssh/controlmasters/%r@%h:%p
+    ControlPersist 10m
+
+# Общие настройки для всех хостов в сети example.com
+Host *.example.com
+    User common-user
+    IdentityFile ~/.ssh/example_key
+    ForwardAgent yes
+
+# Шаблоны с подстановкой
+Host web-*
+    User deploy
+    IdentityFile ~/.ssh/deploy_key
+    ForwardAgent no
