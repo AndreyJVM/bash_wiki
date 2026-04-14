@@ -22,7 +22,7 @@ This script automates the process of updating and maintaining your Ubuntu/Debian
 
 1. Download the script:
    ```bash
-   curl -O https://raw.githubusercontent.com/yourusername/repo/main/update_system.sh
+   curl -O https://raw.githubusercontent.com/AndreyJVM/repo/main/system_update/update_system.sh
    ```
    
 2. Make it executable:
