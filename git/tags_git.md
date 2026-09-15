@@ -1,4 +1,4 @@
-### 1. Добавляем измененные файлы UI
+### 1. Добавляем файлы 
 ```bahs
 git add src/main/resources/static/css/style.css \
 src/main/resources/templates/fragments/layout.html \
